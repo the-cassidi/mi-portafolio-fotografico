@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASSIDI | Fotógrafo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Oswald:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #000;
+            --secondary: #fff;
+            --accent: #e0e0e0;
+            --text: #333;
+            --bg: #fff;
+            --overlay-bg: rgba(0, 0, 0, 0.7);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary: #fff;
+            --secondary: #000;
+            --accent: #333;
+            --text: #f0f0f0;
+            --bg: #121212;
+            --overlay-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        body {
+            font-family: 'Raleway', Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            overflow-x: hidden;
+            transition: background 0.5s, color 0.5s;
+            font-weight: 400;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--bg);
+            border-bottom: 1px solid var(--accent);
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo h1 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 3.4rem;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-transform: uppercase;
+            line-height: 0.9;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo p {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            color: var(--primary);
+            margin-top: 8px;
+            margin-left: 3px;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropbtn {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+        }
+
+        .dropbtn:hover {
+            background: var(--accent);
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--bg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+            min-width: 120px;
+            z-index: 1;
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            overflow: hidden;
+            animation: fadeIn 0.3s;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--accent);
+            transition: var(--transition);
+            font-family: 'Raleway', sans-serif;
+            font-weight: 400;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background: var(--accent);
+        }
+
+        #about-btn {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            color: var(--primary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        #about-btn:hover {
+            background: var(--accent);
+        }
+
+        /* CONTENIDO PRINCIPAL - MODIFICADO */
+        .content-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 120px auto 0;
+            padding: 0 5%;
+        }
+
+        .left-column {
+            width: 30%;
+            padding: 40px 20px 40px 0; /* Alineado completamente a la izquierda */
+            position: sticky;
+            top: 140px;
+            height: fit-content;
+            border-right: 1px solid var(--accent);
+            margin-left: -20px; /* Empuja más a la izquierda */
+        }
+
+        .right-column {
+            width: 70%;
+            padding: 40px 0 40px 40px;
+        }
+
+        /* SECCIÓN STATEMENT */
+        #statement {
+            padding: 0 20px;
+        }
+
+        #statement h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: left;
+            letter-spacing: 0.5px;
+            color: var(--primary);
+            font-weight: 700;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        #statement p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: left;
+            color: var(--text);
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        /* GALERÍA */
+        #gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .photo-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s, filter 0.5s;
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, var(--overlay-bg));
+            color: var(--secondary);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .photo-overlay h3, .photo-overlay p {
+            color: var(--secondary);
+            font-weight: 400;
+        }
+
+        .photo-overlay h3 {
+            font-weight: 600;
+        }
+
+        .photo-item:hover .photo-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* MODALES */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            animation: fadeIn 0.4s;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            position: relative;
+            background: var(--bg);
+            margin: 2% auto;
+            padding: 40px;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 10px;
+            animation: slideUp 0.5s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text);
+            transition: var(--transition);
+            font-weight: 400;
+        }
+
+        .close:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* ABOUT MODAL */
+        #about-modal .modal-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+        }
+
+        .photographer-img {
+            width: 100%;
+            height: 300px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .photographer-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-style: italic;
+            margin-bottom: 25px;
+            color: var(--text);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .contact-info p {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text);
+            font-size: 1.05rem;
+            font-weight: 400;
+        }
+
+        .contact-info a {
+            color: var(--primary);
+            text-decoration: none;
+            position: relative;
+            transition: var(--transition);
+            font-weight: 400;
+        }
+
+        .contact-info a:hover {
+            color: #4a6fa5;
+        }
+
+        /* BOTÓN TEMA */
+        #theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+
+        #theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        /* ANIMACIONES */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* MODAL DE FOTO - AJUSTES DE TAMAÑO */
+        .photo-modal-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .photo-modal-image {
+            flex: 1;
+            min-width: 300px;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .photo-modal-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .photo-details {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        #zoom-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: var(--bg);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+            color: var(--text);
+        }
+
+        #zoom-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .content-container {
+                flex-direction: column;
+            }
+            
+            .left-column, .right-column {
+                width: 100%;
+                padding: 20px 0;
+                position: static;
+                border-right: none;
+                margin-left: 0;
+            }
+            
+            .left-column {
+                border-bottom: 1px solid var(--accent);
+            }
+        }
+
+        @media (max-width: 900px) {
+            #about-modal .modal-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .photographer-img {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px 5%;
+            }
+            
+            nav {
+                justify-content: center;
+                margin-top: 15px;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .logo h1 {
+                font-size: 2.8rem;
+            }
+            
+            .logo p {
+                font-size: 1.1rem;
+                letter-spacing: 4px;
+            }
+            
+            #gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 2.4rem;
+            }
+            
+            .logo p {
+                font-size: 1rem;
+                letter-spacing: 3px;
+            }
+            
+            #statement h2 {
+                font-size: 1.5rem;
+            }
+            
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .photo-modal-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <h1>CASSIDI</h1>
+            <p>FOTÓGRAFO</p>
+        </div>
+        
+        <nav>
+            <div class="dropdown">
+                <button class="dropbtn">AÑOS <i class="fas fa-chevron-down"></i></button>
+                <div class="dropdown-content" id="years-dropdown">
+                    <a href="#" data-year="all">Todos</a>
+                    <a href="#" data-year="2022">2022</a>
+                    <a href="#" data-year="2023">2023</a>
+                    <a href="#" data-year="2024">2024</a>
+                    <a href="#" data-year="2025">2025</a>
+                    <a href="#" data-year="2026">2026</a>
+                    <a href="#" data-year="2027">2027</a>
+                    <a href="#" data-year="2028">2028</a>
+                    <a href="#" data-year="2029">2029</a>
+                    <a href="#" data-year="2030">2030</a>
+                </div>
+            </div>
+            
+            <button id="about-btn">SOBRE MÍ</button>
+        </nav>
+    </header>
+
+    <div class="content-container">
+        <!-- COLUMNA IZQUIERDA - DESCRIPCIÓN (ALINEADA A LA IZQUIERDA) -->
+        <div class="left-column">
+            <section id="statement">
+                <h2>UN AMATEUR CON UN TELÉFONO, CADA FOTO UNA HISTORIA</h2>
+                <p>Bienvenido a mi rincón visual. No soy fotógrafo profesional. Soy alguien que aprendió a mirar el mundo con otros ojos gracias a una cámara.</p>
+                <p>Cada imagen aquí nació desde el impulso de querer recordar. Algunas fueron tomadas por instinto, otras tras largos minutos observando. A veces tienen historias profundas, otras veces absurdas, pero todas tienen algo que contar… aunque sea solo para mí.</p>
+                <p>Este portafolio es mi manera de preservar lo que podría olvidar mañana. No solo lo que vi, sino lo que sentí al presionar el obturador.</p>
+                <p>Si estás aquí, ojalá encuentres algo que también te hable a ti.</p>
+            </section>
+        </div>
+
+        <!-- COLUMNA DERECHA - GALERÍA -->
+        <div class="right-column">
+            <section id="gallery">
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1506260408121-e353d10b87c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1228&q=80" alt="Bosque encantado">
+                    <div class="photo-overlay">
+                        <h3>Bosque Encantado</h3>
+                        <p>Chocó, Colombia | 2023</p>
+                    </div>
+                </div>
+                
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Atardecer en el lago">
+                    <div class="photo-overlay">
+                        <h3>Atardecer en el Lago</h3>
+                        <p>Guatavita, Colombia | 2022</p>
+                    </div>
+                </div>
+                
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1274&q=80" alt="Montañas nubladas">
+                    <div class="photo-overlay">
+                        <h3>Montañas Nubladas</h3>
+                        <p>Santa Marta, Colombia | 2024</p>
+                    </div>
+                </div>
+                
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1174&q=80" alt="Paisaje rocoso">
+                    <div class="photo-overlay">
+                        <h3>Paisaje Rocoso</h3>
+                        <p>Guajira, Colombia | 2023</p>
+                    </div>
+                </div>
+                
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="Sendero en el bosque">
+                    <div class="photo-overlay">
+                        <h3>Sendero en el Bosque</h3>
+                        <p>Antioquia, Colombia | 2022</p>
+                    </div>
+                </div>
+                
+                <div class="photo-item">
+                    <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Cascada escondida">
+                    <div class="photo-overlay">
+                        <h3>Cascada Escondida</h3>
+                        <p>Boyacá, Colombia | 2024</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- MODAL ABOUT ME -->
+    <div id="about-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="photographer-img">
+                <!-- CAMBIAR POR TU PROPIA IMAGEN PNG -->
+                <img src="assets/fotografo.jpg" alt="Fotógrafo">
+            </div>
+            <div class="about-content">
+                <h2>Fotógrafo aficionado con alma de contador de historias</h2>
+                <p class="subtitle">Mi cámara es mi cuaderno, y cada disparo una historia contada en silencio</p>
+                
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> omarelnobo@outlook.es</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Colombia</p>
+                    <p><i class="fab fa-instagram"></i> <a href="https://instagram.com/the_cassidi" target="_blank">@the_cassidi</a></p>
+                    <p><i class="fab fa-twitter"></i> <a href="https://twitter.com/Cassidi_777" target="_blank">@Cassidi_777</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FOTO DETALLE -->
+    <div id="photo-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="photo-modal-container">
+                <div class="photo-modal-image">
+                    <img id="modal-img" src="" alt="">
+                    <button id="zoom-btn"><i class="fas fa-search-plus"></i></button>
+                </div>
+                <div class="photo-details">
+                    <h2 id="photo-title"></h2>
+                    <p><strong>Año:</strong> <span id="photo-year"></span></p>
+                    <p><strong>Ubicación:</strong> <span id="photo-location"></span></p>
+                    <p id="photo-description"></p>
+                    <div id="photo-links"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTÓN TEMA OSCURO/CLARO -->
+    <button id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        // Configuración principal
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configurar eventos
+            setupEventListeners();
+            
+            // Cargar tema guardado
+            loadTheme();
+        });
+
+        function setupEventListeners() {
+            // Botón tema oscuro/claro
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            // Modal About Me
+            const aboutBtn = document.getElementById('about-btn');
+            const aboutModal = document.getElementById('about-modal');
+            const closeBtns = document.querySelectorAll('.close');
+            
+            aboutBtn.addEventListener('click', () => {
+                aboutModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            // Cerrar modal haciendo clic fuera
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Filtro de años
+            const yearLinks = document.querySelectorAll('.dropdown-content a');
+            yearLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const year = e.target.dataset.year;
+                    
+                    // Actualizar texto del botón
+                    const dropbtn = document.querySelector('.dropbtn');
+                    dropbtn.innerHTML = `${year} <i class="fas fa-chevron-down"></i>`;
+                    
+                    // Aquí implementarías el filtrado real cuando tengas el data.json
+                    alert(`Filtrando fotos del año: ${year}`);
+                    
+                    // Cerrar dropdown
+                    document.querySelector('.dropdown-content').classList.remove('show');
+                });
+            });
+            
+            // Abrir dropdown
+            document.querySelector('.dropbtn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelector('.dropdown-content').classList.toggle('show');
+            });
+            
+            // Cerrar dropdown al hacer clic en otro lugar
+            document.addEventListener('click', function(e) {
+                if (!e.target.matches('.dropbtn')) {
+                    const dropdowns = document.querySelectorAll('.dropdown-content');
+                    dropdowns.forEach(dropdown => {
+                        if (dropdown.classList.contains('show')) {
+                            dropdown.classList.remove('show');
+                        }
+                    });
+                }
+            });
+            
+            // Eventos para las fotos de ejemplo
+            document.querySelectorAll('.photo-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const title = this.querySelector('h3').textContent;
+                    const location = this.querySelector('p').textContent;
+                    
+                    // Crear datos de ejemplo para el modal
+                    const photoData = {
+                        title: title,
+                        year: location.split('|')[1].trim(),
+                        location: location.split('|')[0].trim(),
+                        description: "Esta es una descripción de ejemplo para la foto. En la versión final con data.json, aquí aparecerá la descripción real de cada fotografía. Esta imagen representa la belleza natural de Colombia y fue capturada con un teléfono móvil de gama media, demostrando que no se necesita equipo profesional para capturar momentos memorables.",
+                        image: this.querySelector('img').src,
+                        links: [
+                            {text: "Más información", url: "#"}
+                        ]
+                    };
+                    
+                    openPhotoModal(photoData);
+                });
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+            
+            // Guardar preferencia en localStorage
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('#theme-toggle i');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+
+        function openPhotoModal(photo) {
+            const modal = document.getElementById('photo-modal');
+            const modalImg = document.getElementById('modal-img');
+            const photoTitle = document.getElementById('photo-title');
+            const photoYear = document.getElementById('photo-year');
+            const photoLocation = document.getElementById('photo-location');
+            const photoDescription = document.getElementById('photo-description');
+            const photoLinks = document.getElementById('photo-links');
+            
+            // Llenar datos
+            modalImg.src = photo.image;
+            modalImg.alt = photo.title;
+            photoTitle.textContent = photo.title;
+            photoYear.textContent = photo.year;
+            photoLocation.textContent = photo.location;
+            photoDescription.textContent = photo.description;
+            
+            // Limpiar y agregar enlaces
+            photoLinks.innerHTML = '';
+            if (photo.links && photo.links.length > 0) {
+                photoLinks.innerHTML = '<h3>Enlaces relacionados:</h3>';
+                const linksList = document.createElement('ul');
+                linksList.style.marginTop = '10px';
+                
+                photo.links.forEach(link => {
+                    const listItem = document.createElement('li');
+                    listItem.style.marginBottom = '8px';
+                    
+                    const anchor = document.createElement('a');
+                    anchor.href = link.url;
+                    anchor.target = '_blank';
+                    anchor.textContent = link.text;
+                    anchor.style.color = 'var(--primary)';
+                    anchor.style.textDecoration = 'none';
+                    anchor.style.position = 'relative';
+                    
+                    // Efecto subrayado al pasar el mouse
+                    const underline = document.createElement('span');
+                    underline.style.position = 'absolute';
+                    underline.style.bottom = '-2px';
+                    underline.style.left = '0';
+                    underline.style.width = '0';
+                    underline.style.height = '1px';
+                    underline.style.backgroundColor = 'var(--primary)';
+                    underline.style.transition = 'width 0.3s';
+                    
+                    anchor.appendChild(underline);
+                    
+                    anchor.addEventListener('mouseenter', () => {
+                        underline.style.width = '100%';
+                    });
+                    
+                    anchor.addEventListener('mouseleave', () => {
+                        underline.style.width = '0';
+                    });
+                    
+                    listItem.appendChild(anchor);
+                    linksList.appendChild(listItem);
+                });
+                
+                photoLinks.appendChild(linksList);
+            }
+            
+            // Botón de zoom
+            const zoomBtn = document.getElementById('zoom-btn');
+            let isZoomed = false;
+            
+            zoomBtn.onclick = function() {
+                if (isZoomed) {
+                    modalImg.style.transform = 'scale(1)';
+                    modalImg.style.cursor = 'zoom-in';
+                    zoomBtn.innerHTML = '<i class="fas fa-search-plus"></i>';
+                } else {
+                    modalImg.style.transform = 'scale(1.8)';
+                    modalImg.style.cursor = 'zoom-out';
+                    zoomBtn.innerHTML = '<i class="fas fa-search-minus"></i>';
+                }
+                isZoomed = !isZoomed;
+            };
+            
+            // Resetear zoom al abrir otra foto
+            modalImg.style.transform = 'scale(1)';
+            modalImg.style.cursor = 'zoom-in';
+            zoomBtn.innerHTML = '<i class="fas fa-search-plus"></i>';
+            isZoomed = false;
+            
+            // Mostrar modal
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+    </script>
+    <script src="data.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const gallery = document.getElementById('gallery');
+    
+    // Genera las fotos dinámicamente
+    gallery.innerHTML = photoData.photos.map(photo => `
+      <div class="photo-item">
+        <img src="${photo.src}" alt="${photo.title}" loading="lazy">
+        <div class="photo-overlay">
+          <h3>${photo.title}</h3>
+          <p>${photo.location} | ${photo.year}</p>
+        </div>
+      </div>
+    `).join('');
+
+    // Conecta los clics al modal (usa tu función openPhotoModal)
+    document.querySelectorAll('.photo-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const imgSrc = this.querySelector('img').src;
+        const photo = photoData.photos.find(p => imgSrc.includes(p.src.split('/').pop()));
+        
+        if (photo) {
+          openPhotoModal({
+            title: photo.title,
+            year: photo.year,
+            location: photo.location,
+            image: imgSrc,
+            description: photo.description || "Sin descripción",
+            links: photo.links || []
+          });
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
